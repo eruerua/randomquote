@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>台詞</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/share.min.css">
+		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<script src="js/jquery.share.min.js"></script>
+		<style type="text/css">
+			* {
+				font-size: 24px;
+			}
+			
+			#text {
+				height: 100px;
+				margin: 20px 20px 0 20px;
+			}
+			
+			#source {
+				height: 50px;
+				margin-right: 20px;
+			}
+			
+			.container {
+				border: 2px solid;
+				border-radius: 25px;
+				background-color: rgba(225, 107, 140, .75);
+				width: 500px;
+				margin: 0 auto;
+				margin-top: 50px;
+			}
+			
+			.social-share {
+				margin-left: 20px;
+			}
+			
+			#button {
+				margin-right: 20px;
+			}
+			
+			#source {
+				text-align: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div id="text">
+					內容在這
+				</div>
+			</div>
+			<div class="row">
+				<div id="source">
+					出處在這
+				</div>
+			</div>
+
+			<div class="row">
+				<button type="button" id="button" class="btn btn-primary pull-right">來一句</button>
+			</div>
+			<div class="row">
+				<div class="social-share row" data-description=" 一键分享到微博，QQ空间，腾讯微博，人人，豆瓣"></div>
+
+			</div>
+
+		</div>
+
+		<script>
+			var $config = {
+				disabled: ['google', 'facebook', 'twitter']
+			};
+
+			$('.social-share').share($config);
+			$(document).ready(function() {
+
+				$('#button').on('click', function() {
+					$.ajax({
+						url: "https://api.acman.cn/taici/tcrand",
+						type: "GET",
+						dataType: 'json',
+						success: function(data) {
+							console.log(data);
+							$("#text").text(data.taici);
+							$("#source").text("---" + data.source)
+						}
+					});
+				})
+			})
+		</script>
+	</body>
+
+</html>
